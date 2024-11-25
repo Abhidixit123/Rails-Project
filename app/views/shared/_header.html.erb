@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+  <div class="container-fluid">
+    <%# <a class="navbar-brand" href="#">HrMitra</a> %>
+    <%= link_to 'Hr-Mitra', root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+       
+        <% if user_signed_in? %>  
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Settings
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="javascript:void(0)">Signed in as <%= current_user.email %></a></li>
+              <!-- Corrected Sign-out link using Rails UJS -->
+              <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete,data: { turbo_confirm: 'Are you sure to logout?' },
+    class: 'dropdown-item' %>
+                 </li>
+            </ul>
+          </li>
+        <% else %> 
+          <li class="nav-item">
+            <%= link_to "Sign In", new_user_session_path, class: 'nav-link-active' %>
+          </li>
+        <% end %>   
+        
+      </ul>
+      
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+<div class="col-lg-6 mx-auto">
+  <div class="card shadow-sm" style="border: 1px solid #007bff;">
+    <div class="card-header" style="background-color: #007bff; color: white;">
+      <h2 class="text-center">Sign Up</h2>
+    </div>
+    <div class="card-body" style="background-color: #f8f9fa;">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "users/shared/error_messages", resource: resource %>
+
+        <div class="form-group">
+          <%= f.label :email, class: 'form-label mb-2' %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", style: "border: 1px solid #007bff;" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, class: 'form-label mb-2 mt-2' %>
+          <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg", style: "border: 1px solid #007bff;" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, class: 'form-label mb-2 mt-2' %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg", style: "border: 1px solid #007bff;" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit "Sign up", class: "btn btn-primary mt-4 w-100", style: "background-color: #007bff; border-color: #0056b3;" %>
+        </div>
+      <% end %>
+
+      <%= render "users/shared/links" %>
+    </div>
+  </div>
+</div>
