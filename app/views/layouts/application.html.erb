@@ -17,6 +17,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
       
 
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= turbo_include_tags %>
+
+    
+    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>

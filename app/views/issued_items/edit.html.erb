@@ -1,0 +1,39 @@
+<h1 class="text-center mb-4">Edit Issued Item</h1>
+
+<%= form_with(model: @issued_item, local: true) do |form| %>
+  <% if @issued_item.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@issued_item.errors.count, "error") %> prohibited this item from being saved:</h4>
+      <ul>
+        <% @issued_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :item_id, "Select Item", class: 'form-label' %>
+    <%= form.collection_select :item_id, @items, :id, :name, {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :employee_id, "Select Employee", class: 'form-label' %>
+    <%= form.collection_select :employee_id, @employees, :id, :name, {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :issued_at, "Issued At", class: 'form-label' %>
+    <%= form.datetime_field :issued_at, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :returned_at, "Returned At", class: 'form-label' %>
+    <%= form.datetime_field :returned_at, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit 'Update Issued Item', class: 'btn btn-primary' %>
+    <%= link_to 'Back', issued_items_path, class: 'btn btn-secondary ms-2' %>
+  </div>
+<% end %>

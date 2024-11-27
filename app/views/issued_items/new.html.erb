@@ -1,0 +1,40 @@
+<h1 class="text-center">Issue New Item</h1>
+
+<%= form_with(model: @issued_item, local: true) do |form| %>
+  <% if @issued_item.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@issued_item.errors.count, "error") %> prohibited this item from being issued:</h4>
+      <ul>
+        <% @issued_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :item_id, class: 'form-label' %>
+    <%= form.collection_select :item_id, Item.all, :id, :name, { prompt: "Select Item" }, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :employee_id, class: 'form-label' %>
+    <%= form.collection_select :employee_id, Employee.all, :id, :name, { prompt: "Select Employee" }, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :issued_at, class: 'form-label' %>
+    <%= form.date_field :issued_at, value: Time.current.to_date, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :returned_at, class: 'form-label' %>
+    <%= form.date_field :returned_at, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit 'Issue Item', class: 'btn btn-success' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', issued_items_path, class: 'btn btn-secondary' %>

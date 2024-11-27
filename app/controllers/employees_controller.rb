@@ -4,43 +4,39 @@ class EmployeesController < ApplicationController
   before_action :check_permissions, only: [:edit, :update, :destroy]
 
   def index
-    # Admin can see all employees, HR can see employees too (if needed, we can filter here).
-    if current_user.admin?
-      @employees = Employee.all
-    elsif current_user.hr?
-      @employees = Employee.all # HR can also see all employees, modify this filter if necessary.
-    else
-      @employees = Employee.all # Employees can only see themselves
-    end
+    # Everyone can see all employees
+    @employees = Employee.all
   end
 
   def new
-    # Only Admin or HR can create employees.
+    # Only Admin or HR can create employees
     if current_user.admin? || current_user.hr?
       @employee = Employee.new
     else
-      redirect_to root_path, alert: "You don't have permission to create an employee."
+      redirect_to employees_path, alert: "You don't have permission to create an employee."
     end
   end
 
   def create
-    @employee = Employee.new(employee_params)
-    
-    # @employee.user_id = current_user.id if current_user
+    if current_user.admin? || current_user.hr?
+      @employee = Employee.new(employee_params)
 
-    if @employee.save
-      redirect_to employees_path, notice: "Employee created successfully."
+      if @employee.save
+        redirect_to employees_path, notice: "Employee created successfully."
+      else
+        Rails.logger.debug("Employee creation failed: #{@employee.errors.full_messages}")
+        flash[:alert] = @employee.errors.full_messages.to_sentence
+        render :new
+      end
     else
-      Rails.logger.debug("Employee creation failed: #{@employee.errors.full_messages}")
-      flash[:alert] = @employee.errors.full_messages.to_sentence
-      render :new
+      redirect_to employees_path, alert: "You don't have permission to create an employee."
     end
   end
 
   def edit
     # Admin or HR can edit employee details
     unless current_user.admin? || current_user.hr?
-      redirect_to root_path, alert: "You don't have permission to edit this employee."
+      redirect_to employees_path, alert: "You don't have permission to edit this employee."
     end
   end
 
@@ -54,26 +50,24 @@ class EmployeesController < ApplicationController
         render :edit
       end
     else
-      redirect_to root_path, alert: "You don't have permission to update this employee."
+      redirect_to employees_path, alert: "You don't have permission to update this employee."
     end
   end
 
   def show
-    # Employees can only see their own profile
-    if current_user.employee? && current_user != @employee
-      redirect_to root_path, alert: "You can only view your own profile."
-    end
+    # Everyone can view an employee's details
   end
 
   def destroy
-    if current_user.admin? # Only admin can delete employees
+    # Only admin can delete employees
+    if current_user.admin?
       if @employee.destroy
-        redirect_to employees_path, notice: 'Employee has been deleted successfully.'
+        redirect_to employees_path, notice: "Employee has been deleted successfully."
       else
-        redirect_to employees_path, alert: 'Failed to delete the employee.'
+        redirect_to employees_path, alert: "Failed to delete the employee."
       end
     else
-      redirect_to root_path, alert: "You don't have permission to delete this employee."
+      redirect_to employees_path, alert: "You don't have permission to delete this employee."
     end
   end
 
@@ -89,10 +83,10 @@ class EmployeesController < ApplicationController
     redirect_to employees_path, notice: "Employee not found: #{error.message}"
   end
 
-  # Check if the current user has the right permissions to edit, update or delete
+  # Check if the current user has the right permissions to edit, update, or delete
   def check_permissions
-    if current_user.employee? && current_user != @employee
-      redirect_to root_path, alert: "You can only edit your own profile."
+    unless current_user.admin? || current_user.hr?
+      redirect_to employees_path, alert: "You don't have permission to perform this action."
     end
   end
 end

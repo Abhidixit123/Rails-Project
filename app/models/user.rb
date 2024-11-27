@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :role, presence: true, inclusion: { in: %w[admin hr employee] }
 
   has_one :employee, dependent: :destroy  # Re-add this line
+  has_many :issued_items, foreign_key: :issued_by
 
   after_create :employee_update
 

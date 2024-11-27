@@ -1,0 +1,34 @@
+<% if current_user.admin?  %>
+  <%= link_to 'Issue New Item', new_issued_item_path, class: 'btn btn-success mb-3' %>
+<% end %>
+
+<h1 class="text-center">Issued Items</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Employee</th>
+      <th>Issued At</th>
+      <th>Returned At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issued_items.each do |issued_item| %>
+      <tr>
+        <td><%= issued_item.item.name %></td>
+        <td><%= issued_item.employee.name %></td>
+        <td><%= issued_item.issued_at %></td>
+        <td><%= issued_item.returned_at %></td>
+        <td>
+          <%= link_to "Edit", edit_issued_item_path(issued_item), class: 'btn btn-primary' %> 
+          <%# <%= link_to "Delete", issued_item_path(issued_item), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %> 
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', issued_items_path, class: 'btn btn-secondary' %>
