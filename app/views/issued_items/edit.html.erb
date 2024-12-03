@@ -1,9 +1,9 @@
-<h1 class="text-center mb-4">Edit Issued Item</h1>
+<h1 class="text-center">Issue New Item</h1>
 
 <%= form_with(model: @issued_item, local: true) do |form| %>
   <% if @issued_item.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(@issued_item.errors.count, "error") %> prohibited this item from being saved:</h4>
+      <h4><%= pluralize(@issued_item.errors.count, "error") %> prohibited this item from being issued:</h4>
       <ul>
         <% @issued_item.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -12,28 +12,23 @@
     </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= form.label :item_id, "Select Item", class: 'form-label' %>
-    <%= form.collection_select :item_id, @items, :id, :name, {}, class: 'form-select' %>
+ 
+
+  <div class="form-group">
+    <%= form.label :employee_id, class: 'form-label' %>
+    <%= form.collection_select :employee_id, Employee.all, :id, :name, { prompt: "Select Employee" }, class: 'form-control' %>
   </div>
 
-  <div class="mb-3">
-    <%= form.label :employee_id, "Select Employee", class: 'form-label' %>
-    <%= form.collection_select :employee_id, @employees, :id, :name, {}, class: 'form-select' %>
+  <div class="form-group">
+    <%= form.label :issued_at, class: 'form-label' %>
+    <%= form.date_field :issued_at, value: Time.current.to_date, class: 'form-control' %>
   </div>
 
-  <div class="mb-3">
-    <%= form.label :issued_at, "Issued At", class: 'form-label' %>
-    <%= form.datetime_field :issued_at, class: 'form-control' %>
-  </div>
+  
 
-  <div class="mb-3">
-    <%= form.label :returned_at, "Returned At", class: 'form-label' %>
-    <%= form.datetime_field :returned_at, class: 'form-control' %>
-  </div>
-
-  <div class="mb-3">
-    <%= form.submit 'Update Issued Item', class: 'btn btn-primary' %>
-    <%= link_to 'Back', issued_items_path, class: 'btn btn-secondary ms-2' %>
+  <div class="form-group">
+    <%= form.submit 'Issue Item', class: 'btn btn-success' %>
   </div>
 <% end %>
+
+<%= link_to 'Back', issued_items_path, class: 'btn btn-secondary' %>

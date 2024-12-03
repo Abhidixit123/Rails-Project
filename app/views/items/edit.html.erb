@@ -1,10 +1,10 @@
-<h1>Edit Item</h1>
+<h1 class="mb-4">Edit Item</h1>
 
 <%= form_with(model: @item, local: true) do |form| %>
   <% if @item.errors.any? %>
-    <div>
-      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
-      <ul>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h4>
+      <ul class="mb-0">
         <% @item.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -12,25 +12,24 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
+  <div class="form-group">
+    <%= form.label :quantity, class: 'form-label' %>
+    <%= form.number_field :quantity, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit 'Save Changes', class: 'btn btn-primary' %>
   </div>
 <% end %>
 
-<%= link_to 'Back', items_path %>
-
+<%= link_to 'Back', items_path, class: 'btn btn-secondary' %>

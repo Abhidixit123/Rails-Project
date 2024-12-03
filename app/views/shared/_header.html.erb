@@ -14,7 +14,8 @@
               Settings
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="javascript:void(0)">Signed in as <%= current_user.email %></a></li>
+              <li><a class="dropdown-item" href="javascript:void(0)">Signed in as <%= current_user.email.split(
+              '@').first %></a></li>
               <!-- Corrected Sign-out link using Rails UJS -->
               <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete,data: { turbo_confirm: 'Are you sure to logout?' },
     class: 'dropdown-item' %>

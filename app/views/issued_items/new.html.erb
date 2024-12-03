@@ -1,3 +1,4 @@
+
 <h1 class="text-center">Issue New Item</h1>
 
 <%= form_with(model: @issued_item, local: true) do |form| %>
@@ -17,7 +18,7 @@
     <%= form.collection_select :item_id, Item.all, :id, :name, { prompt: "Select Item" }, class: 'form-control' %>
   </div>
 
-  <div class="form-group">
+   <div class="form-group">
     <%= form.label :employee_id, class: 'form-label' %>
     <%= form.collection_select :employee_id, Employee.all, :id, :name, { prompt: "Select Employee" }, class: 'form-control' %>
   </div>
@@ -25,11 +26,6 @@
   <div class="form-group">
     <%= form.label :issued_at, class: 'form-label' %>
     <%= form.date_field :issued_at, value: Time.current.to_date, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :returned_at, class: 'form-label' %>
-    <%= form.date_field :returned_at, class: 'form-control' %>
   </div>
 
   <div class="form-group">

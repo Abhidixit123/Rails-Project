@@ -1,22 +1,29 @@
 Rails.application.routes.draw do
   resources :items
-  resources :issued_items, only: [:index, :new, :create, :destroy, :edit, :update]
+  # resources :issued_items, only: [:index, :new, :create, :destroy, :edit, :update]
   
- 
-  get "issued_items/index"
-  get "issued_items/show"
-  get "issued_items/new"
-  get "issued_items/create"
-  get "issued_items/edit"
-  get "issued_items/update"
-  get "issued_items/destroy"
-  get "items/index"
-  get "items/show"
-  get "items/new"
-  get "items/create"
-  get "items/edit"
-  get "items/update"
-  get "items/destroy"
+  resources :issued_items, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
+  
+    member do
+      patch 'deassign'   # This route maps to your deassign action
+    end
+  end
+
+  # get "issued_items/index"
+  # get "issued_items/:id"
+  # get "issued_items/show"
+  # get "issued_items/new"
+  # get "issued_items/create"
+  # get "issued_items/edit"
+  # get "issued_items/update"
+  # get "issued_items/destroy"
+  # get "items/index"
+  # get "items/show"
+  # get "items/new"
+  # get "items/create"
+  # get "items/edit"
+  # get "items/update"
+  # get "items/destroy"
   # Configure Devise routes with custom controllers
   devise_for :users, controllers: {
     sessions: 'users/sessions',
