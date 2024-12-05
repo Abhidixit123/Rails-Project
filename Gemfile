@@ -58,3 +58,5 @@ end
 
 gem 'devise'
 gem 'pry'
+gem 'omniauth-google-oauth2'
+gem 'dotenv-rails'

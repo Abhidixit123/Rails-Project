@@ -29,7 +29,8 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations',
     passwords: 'users/passwords',
-    confirmations: 'users/confirmations'
+    confirmations: 'users/confirmations',
+    omniauth_callbacks: 'users/omniauth_callbacks' 
   }
 
   # Admin Routes
